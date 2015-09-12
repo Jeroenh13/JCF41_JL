@@ -12,8 +12,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -67,9 +71,9 @@ public class WoordenController implements Initializable {
     
     @FXML
     private void aantalAction(ActionEvent event) {
-        String[] words = DEFAULT_TEXT.split("\\W+");
-        //Sorteren zodat tellen makkelijker en sneller is
-        Arrays.sort(words);
+        //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
+        List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
+        Collections.sort(words);
         
         int cnt = 0;
         String tmp = "";
@@ -81,19 +85,23 @@ public class WoordenController implements Initializable {
                 cnt++;
             }
         }
-        taOutput.setText("Aantal woorden: " + words.length + "\n" + "Aantal verschillende woorden: " + cnt); 
+        taOutput.setText("Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt); 
     }
 
     @FXML
     private void sorteerAction(ActionEvent event) {
-         List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
-         Collections.reverse(words);
+        //TreeSet vraagt snel de volgende in de reeks op.
+        //Alle woorden met hoofdletter staan wel bovenaan gesorteerd..
+        TreeSet<String> words = new TreeSet<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
+        
+        Iterator it = words.descendingIterator();
+        StringBuilder sb = new StringBuilder();
          
-         StringBuilder sb = new StringBuilder();
-         for(String s : words)
-         {
-             sb.append(s).append("\n");
-         }
+        while(it.hasNext())
+        {
+            sb.append(it.next()).append("\n");
+        }
+        
         taOutput.setText(sb.toString()); 
     }
 
