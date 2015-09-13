@@ -5,18 +5,19 @@ package woordenapplicatie.gui;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,27 +31,27 @@ import javafx.scene.control.TextArea;
  * @author frankcoenen
  */
 public class WoordenController implements Initializable {
-    
-   private static final String DEFAULT_TEXT =   "Een, twee, drie, vier\n" +
-                                                "Hoedje van, hoedje van\n" +
-                                                "Een, twee, drie, vier\n" +
-                                                "Hoedje van papier\n" +
-                                                "\n" +
-                                                "Heb je dan geen hoedje meer\n" +
-                                                "Maak er één van bordpapier\n" +
-                                                "Eén, twee, drie, vier\n" +
-                                                "Hoedje van papier\n" +
-                                                "\n" +
-                                                "Een, twee, drie, vier\n" +
-                                                "Hoedje van, hoedje van\n" +
-                                                "Een, twee, drie, vier\n" +
-                                                "Hoedje van papier\n" +
-                                                "\n" +
-                                                "En als het hoedje dan niet past\n" +
-                                                "Zetten we 't in de glazenkas\n" +
-                                                "Een, twee, drie, vier\n" +
-                                                "Hoedje van papier";
-    
+
+    private static final String DEFAULT_TEXT = "Een, twee, drie, vier\n"
+            + "Hoedje van, hoedje van\n"
+            + "Een, twee, drie, vier\n"
+            + "Hoedje van papier\n"
+            + "\n"
+            + "Heb je dan geen hoedje meer\n"
+            + "Maak er één van bordpapier\n"
+            + "Eén, twee, drie, vier\n"
+            + "Hoedje van papier\n"
+            + "\n"
+            + "Een, twee, drie, vier\n"
+            + "Hoedje van, hoedje van\n"
+            + "Een, twee, drie, vier\n"
+            + "Hoedje van papier\n"
+            + "\n"
+            + "En als het hoedje dan niet past\n"
+            + "Zetten we 't in de glazenkas\n"
+            + "Een, twee, drie, vier\n"
+            + "Hoedje van papier";
+
     @FXML
     private Button btAantal;
     @FXML
@@ -68,51 +69,97 @@ public class WoordenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         taInput.setText(DEFAULT_TEXT);
     }
-    
+
     @FXML
     private void aantalAction(ActionEvent event) {
         //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
         List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
         Collections.sort(words);
-        
+
         int cnt = 0;
         String tmp = "";
-        for(String s : words)
-        {
-            if(!tmp.toUpperCase().equals(s.toUpperCase()))
-            {
+        for (String s : words) {
+            if (!tmp.toUpperCase().equals(s.toUpperCase())) {
                 tmp = s;
                 cnt++;
             }
         }
-        taOutput.setText("Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt); 
+        taOutput.setText("Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt);
     }
 
     @FXML
     private void sorteerAction(ActionEvent event) {
         //TreeSet vraagt snel de volgende in de reeks op.
         //Alle woorden met hoofdletter staan wel bovenaan gesorteerd..
-        TreeSet<String> words = new TreeSet<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
-        
+        //Alle woorden naar kleine letters veranderd. Nu klopt het wel
+
+        TreeSet<String> words = new TreeSet<>(Arrays.asList(DEFAULT_TEXT.toLowerCase().split("\\W+")));
         Iterator it = words.descendingIterator();
         StringBuilder sb = new StringBuilder();
-         
-        while(it.hasNext())
-        {
+
+        while (it.hasNext()) {
             sb.append(it.next()).append("\n");
         }
-        
-        taOutput.setText(sb.toString()); 
+
+        taOutput.setText(sb.toString());
     }
 
     @FXML
     private void frequentieAction(ActionEvent event) {
-         throw new UnsupportedOperationException("Not supported yet."); 
+
+        //Moet nog gesorteerd worden op frequentie
+        List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
+
+        Map<String, Integer> wordsHashMap = new HashMap<String, Integer>();
+
+        for (String s : words) {
+            wordsHashMap.putIfAbsent(s, 0);
+            int i = wordsHashMap.get(s) + 1;
+            wordsHashMap.replace(s, i);
+        }
+
+        Iterator it = wordsHashMap.entrySet().iterator();
+
+        StringBuilder sb = new StringBuilder();
+        while (it.hasNext()) {
+            sb.append(it.next()).append("\n");
+        }
+
+        taOutput.setText(sb.toString());
     }
 
     @FXML
     private void concordatieAction(ActionEvent event) {
-         throw new UnsupportedOperationException("Not supported yet."); 
+        //Moet nog gesorteerd worden
+        // Moeten nog individuele woordenuitgehaald worden
+        
+        List<String> lines = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.toLowerCase().split("\\n")));
+        Map<Integer, String> linesHashMap = new HashMap<Integer, String>();
+        Map<String, String> wordsHashMap = new HashMap<String, String>();
+
+        int current = 1;
+        for (String s : lines) {
+            linesHashMap.put(current, s);
+            current++;
+        }
+        for (Integer key : linesHashMap.keySet()) {
+            List<String> words = new ArrayList<>(Arrays.asList(linesHashMap.get(key).split("\\W+")));
+            for (String word : words) {
+                if (wordsHashMap.containsKey(word)) {
+                    wordsHashMap.replace(word, wordsHashMap.get(word) + ", " + key.toString());
+                } else {
+                    wordsHashMap.putIfAbsent(word, key.toString());
+                }
+            }
+        }
+        Iterator it = wordsHashMap.entrySet().iterator();
+
+        StringBuilder sb = new StringBuilder();
+        while (it.hasNext()) {
+            sb.append(it.next()).append("\n");
+        }
+
+        taOutput.setText(sb.toString());
+
     }
-   
 }
