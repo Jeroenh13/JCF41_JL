@@ -72,28 +72,28 @@ public class WoordenController implements Initializable {
 
     @FXML
     private void aantalAction(ActionEvent event) {
-        taOutput.setText(wordCounter());
+        taOutput.setText(wordCounter(DEFAULT_TEXT));
     }
 
     @FXML
     private void sorteerAction(ActionEvent event) {
-        taOutput.setText(backwardSort());
+        taOutput.setText(backwardSort(DEFAULT_TEXT));
     }
 
     @FXML
     private void frequentieAction(ActionEvent event) {
-        taOutput.setText(frequentie());
+        taOutput.setText(frequentie(DEFAULT_TEXT));
     }
 
     @FXML
     private void concordatieAction(ActionEvent event) {
-        taOutput.setText(concordantie());
+        taOutput.setText(concordantie(DEFAULT_TEXT));
 
     }
     
-    public String wordCounter(){
+    public String wordCounter(String story){
          //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
-        List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
+        List<String> words = new ArrayList<>(Arrays.asList(story.split("\\W+")));
         Collections.sort(words);
 
         int cnt = 0;
@@ -107,13 +107,13 @@ public class WoordenController implements Initializable {
         return "Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt;
     }
     
-    public String backwardSort()
+    public String backwardSort(String story)
     {
         //TreeSet vraagt snel de volgende in de reeks op.
         //Alle woorden met hoofdletter staan wel bovenaan gesorteerd..
         //Alle woorden naar kleine letters veranderd. Nu klopt het wel
 
-        TreeSet<String> words = new TreeSet<>(Arrays.asList(DEFAULT_TEXT.toLowerCase().split("\\W+")));
+        TreeSet<String> words = new TreeSet<>(Arrays.asList(story.toLowerCase().split("\\W+")));
         Iterator it = words.descendingIterator();
         StringBuilder sb = new StringBuilder();
 
@@ -124,10 +124,10 @@ public class WoordenController implements Initializable {
         return sb.toString();
     }
     
-    public String frequentie()
+    public String frequentie(String story)
     {
                 //Moet nog gesorteerd worden op frequentie
-        List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
+        List<String> words = new ArrayList<>(Arrays.asList(story.split("\\W+")));
 
         Map<String, Integer> wordsHashMap = new HashMap<String, Integer>();
 
@@ -147,12 +147,12 @@ public class WoordenController implements Initializable {
         return sb.toString();
     }
             
-    public String concordantie()
+    public String concordantie(String story)
     {
         //Moet nog gesorteerd worden
         // Moeten nog individuele woordenuitgehaald worden
         
-        List<String> lines = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.toLowerCase().split("\\n")));
+        List<String> lines = new ArrayList<>(Arrays.asList(story.toLowerCase().split("\\n")));
         Map<Integer, String> linesHashMap = new HashMap<Integer, String>();
         Map<String, String> wordsHashMap = new HashMap<String, String>();
 

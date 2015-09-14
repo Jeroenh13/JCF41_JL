@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import woordenapplicatie.gui.WoordenController;
 
 /**
  *
@@ -41,4 +42,13 @@ public class WoordenControllerTest {
     //
     // @Test
     // public void hello() {}
+    
+    @Test
+    public void testWordCounter()
+    {
+        WoordenController controller = new WoordenController();
+        String s = controller.wordCounter();
+        
+    }
+    
 }
