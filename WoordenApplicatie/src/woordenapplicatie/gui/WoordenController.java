@@ -9,10 +9,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -119,8 +121,8 @@ public class WoordenController implements Initializable {
 
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
-        }   
-        
+        }
+
         return sb.toString();
     }
     
@@ -129,21 +131,39 @@ public class WoordenController implements Initializable {
                 //Moet nog gesorteerd worden op frequentie
         List<String> words = new ArrayList<>(Arrays.asList(story.split("\\W+")));
 
-        Map<String, Integer> wordsHashMap = new HashMap<String, Integer>();
+        Map<String, Integer> wordsHashMap = new HashMap<>();
 
+        //Elk woord dat nog niet is voorgekomen wordt erin gezet, woorden die al geweest zijn worden opgeteld.
         for (String s : words) {
             wordsHashMap.putIfAbsent(s, 0);
             int i = wordsHashMap.get(s) + 1;
             wordsHashMap.replace(s, i);
         }
+        
+        //Linked list voor snel benaderen van allles wat erin staat
+        List sorted = new LinkedList(wordsHashMap.entrySet());
+        // Comparator voor de value
+        Collections.sort(sorted, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                 return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+            }
+        });
 
-        Iterator it = wordsHashMap.entrySet().iterator();
+        //Alles van de gesorteerde hashmap wordt gezet in een linked hashmap zodat de ordening blijft zoals die was
+        HashMap sortedHashMap = new LinkedHashMap();
+        for (Iterator it = sorted.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            sortedHashMap.put(entry.getKey(), entry.getValue());
+        }
+        
+        Iterator it = sortedHashMap.entrySet().iterator();
 
         StringBuilder sb = new StringBuilder();
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
         }
-        
+
         return sb.toString();
     }
             
@@ -177,7 +197,7 @@ public class WoordenController implements Initializable {
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
         }
-        
+
         return sb.toString();
     }
 }
