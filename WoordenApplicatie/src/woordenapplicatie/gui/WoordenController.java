@@ -128,7 +128,6 @@ public class WoordenController implements Initializable {
     
     public String frequentie(String story)
     {
-                //Moet nog gesorteerd worden op frequentie
         List<String> words = new ArrayList<>(Arrays.asList(story.split("\\W+")));
 
         Map<String, Integer> wordsHashMap = new HashMap<>();
@@ -169,22 +168,23 @@ public class WoordenController implements Initializable {
             
     public String concordantie(String story)
     {
-        //Moet nog gesorteerd worden
-        // Moeten nog individuele woordenuitgehaald worden
-        
-        List<String> lines = new ArrayList<>(Arrays.asList(story.toLowerCase().split("\\n")));
+        List<String> lines = new ArrayList<>(Arrays.asList(story.toLowerCase().split("\\n+")));
         Map<Integer, String> linesHashMap = new HashMap<Integer, String>();
         Map<String, String> wordsTreeMap = new TreeMap<String, String>();
 
+        //Zet elke lijn in een hashmap
         int current = 1;
         for (String s : lines) {
             linesHashMap.put(current, s);
             current++;
         }
+        
+        //loopt door elke lijn heen
         for (Integer key : linesHashMap.keySet()) {
             List<String> words = new ArrayList<>(Arrays.asList(linesHashMap.get(key).split("\\W+")));
             for (String word : words) {
                 if (wordsTreeMap.containsKey(word)) {
+                    //Voegt de regel van de lijn toe
                     wordsTreeMap.replace(word, wordsTreeMap.get(word) + ", " + key.toString());
                 } else {
                     wordsTreeMap.putIfAbsent(word, key.toString());

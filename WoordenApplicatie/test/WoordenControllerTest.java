@@ -75,4 +75,47 @@ public class WoordenControllerTest {
                                 + "a" + "\n";
         Assert.assertEquals(expectedOutput.toString(), realOutput.toString());                               
     }
+<<<<<<< HEAD
+=======
+    
+    @Test
+    public void frequentTest()
+    {
+        WoordenController controller = new WoordenController();
+        String story = "dit is een tekst waar vaker is en dit in voorkomt";
+        
+        String testOutput = controller.frequentie(story);
+        String ExpectedOutput = "vaker=1\n" +
+                                "in=1\n" +
+                                "voorkomt=1\n" +
+                                "tekst=1\n" +
+                                "en=1\n" +
+                                "waar=1\n" +
+                                "een=1\n" +
+                                "is=2\n" +
+                                "dit=2\n" +
+                                "";
+        Assert.assertEquals(ExpectedOutput, testOutput);
+    }
+    
+    @Test
+    public void concordantieTest()
+    {
+        WoordenController controller = new WoordenController();
+        String story = "Dit is een \nverhaal met meerdere regels. \nDit is een regel";
+        
+        String testOutput = controller.concordantie(story);
+        String ExpectedOutput = "dit=1, 3\n" +
+                                "een=1, 3\n" +
+                                "is=1, 3\n" +
+                                "meerdere=2\n" +
+                                "met=2\n" +
+                                "regel=3\n" +
+                                "regels=2\n" +
+                                "verhaal=2\n" +
+                                "";
+        
+        Assert.assertEquals(ExpectedOutput, testOutput);
+    }
+>>>>>>> origin/master
 }
