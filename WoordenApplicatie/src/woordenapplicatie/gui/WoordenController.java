@@ -9,10 +9,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -90,9 +92,9 @@ public class WoordenController implements Initializable {
         taOutput.setText(concordantie());
 
     }
-    
-    public String wordCounter(){
-         //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
+
+    public String wordCounter() {
+        //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
         List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
         Collections.sort(words);
 
@@ -106,9 +108,8 @@ public class WoordenController implements Initializable {
         }
         return "Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt;
     }
-    
-    public String backwardSort()
-    {
+
+    public String backwardSort() {
         //TreeSet vraagt snel de volgende in de reeks op.
         //Alle woorden met hoofdletter staan wel bovenaan gesorteerd..
         //Alle woorden naar kleine letters veranderd. Nu klopt het wel
@@ -119,42 +120,58 @@ public class WoordenController implements Initializable {
 
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
-        }   
-        
+        }
+
         return sb.toString();
     }
-    
-    public String frequentie()
-    {
-                //Moet nog gesorteerd worden op frequentie
+
+    public String frequentie() {
+        //Moet nog gesorteerd worden op frequentie
         List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
 
-        Map<String, Integer> wordsHashMap = new HashMap<String, Integer>();
+        Map<String, Integer> wordsHashMap = new HashMap<>();
 
+        //Elk woord dat nog niet is voorgekomen wordt erin gezet, woorden die al geweest zijn worden opgeteld.
         for (String s : words) {
             wordsHashMap.putIfAbsent(s, 0);
             int i = wordsHashMap.get(s) + 1;
             wordsHashMap.replace(s, i);
         }
+        
+        //Linked list voor snel benaderen van allles wat erin staat
+        List sorted = new LinkedList(wordsHashMap.entrySet());
+        // Comparator voor de value
+        Collections.sort(sorted, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                 return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+            }
+        });
 
-        Iterator it = wordsHashMap.entrySet().iterator();
+        //Alles van de gesorteerde hashmap wordt gezet in een linked hashmap zodat de ordening blijft zoals die was
+        HashMap sortedHashMap = new LinkedHashMap();
+        for (Iterator it = sorted.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            sortedHashMap.put(entry.getKey(), entry.getValue());
+        }
+        
+        Iterator it = sortedHashMap.entrySet().iterator();
 
         StringBuilder sb = new StringBuilder();
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
         }
-        
+
         return sb.toString();
     }
-            
-    public String concordantie()
-    {
+
+    public String concordantie() {
         //Moet nog gesorteerd worden
         // Moeten nog individuele woordenuitgehaald worden
-        
+
         List<String> lines = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.toLowerCase().split("\\n")));
-        Map<Integer, String> linesHashMap = new HashMap<Integer, String>();
-        Map<String, String> wordsHashMap = new HashMap<String, String>();
+        Map<Integer, String> linesHashMap = new HashMap<>();
+        Map<String, String> wordsHashMap = new HashMap<>();
 
         int current = 1;
         for (String s : lines) {
@@ -177,7 +194,7 @@ public class WoordenController implements Initializable {
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
         }
-        
+
         return sb.toString();
     }
 }
