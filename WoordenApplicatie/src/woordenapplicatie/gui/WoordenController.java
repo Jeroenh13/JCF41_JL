@@ -72,7 +72,27 @@ public class WoordenController implements Initializable {
 
     @FXML
     private void aantalAction(ActionEvent event) {
-        //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
+        taOutput.setText(wordCounter());
+    }
+
+    @FXML
+    private void sorteerAction(ActionEvent event) {
+        taOutput.setText(backwardSort());
+    }
+
+    @FXML
+    private void frequentieAction(ActionEvent event) {
+        taOutput.setText(frequentie());
+    }
+
+    @FXML
+    private void concordatieAction(ActionEvent event) {
+        taOutput.setText(concordantie());
+
+    }
+    
+    public String wordCounter(){
+         //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
         List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
         Collections.sort(words);
 
@@ -84,11 +104,11 @@ public class WoordenController implements Initializable {
                 cnt++;
             }
         }
-        taOutput.setText("Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt);
+        return "Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt;
     }
-
-    @FXML
-    private void sorteerAction(ActionEvent event) {
+    
+    public String backwardSort()
+    {
         //TreeSet vraagt snel de volgende in de reeks op.
         //Alle woorden met hoofdletter staan wel bovenaan gesorteerd..
         //Alle woorden naar kleine letters veranderd. Nu klopt het wel
@@ -99,15 +119,14 @@ public class WoordenController implements Initializable {
 
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
-        }
-
-        taOutput.setText(sb.toString());
+        }   
+        
+        return sb.toString();
     }
-
-    @FXML
-    private void frequentieAction(ActionEvent event) {
-
-        //Moet nog gesorteerd worden op frequentie
+    
+    public String frequentie()
+    {
+                //Moet nog gesorteerd worden op frequentie
         List<String> words = new ArrayList<>(Arrays.asList(DEFAULT_TEXT.split("\\W+")));
 
         Map<String, Integer> wordsHashMap = new HashMap<String, Integer>();
@@ -124,12 +143,12 @@ public class WoordenController implements Initializable {
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
         }
-
-        taOutput.setText(sb.toString());
+        
+        return sb.toString();
     }
-
-    @FXML
-    private void concordatieAction(ActionEvent event) {
+            
+    public String concordantie()
+    {
         //Moet nog gesorteerd worden
         // Moeten nog individuele woordenuitgehaald worden
         
@@ -158,8 +177,7 @@ public class WoordenController implements Initializable {
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
         }
-
-        taOutput.setText(sb.toString());
-
+        
+        return sb.toString();
     }
 }
