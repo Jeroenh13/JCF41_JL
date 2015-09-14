@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,8 +48,12 @@ public class WoordenControllerTest {
     public void testWordCounter()
     {
         WoordenController controller = new WoordenController();
-        String s = controller.wordCounter();
+        String story = "een, twee, drie, vier, vijf\n"
+            + "een, twee, drie, vier, vijf\n";   
         
+        String testOutput = controller.wordCounter(story);
+        String expectedOutput = "Aantal woorden: 10" + "\n" + "Aantal verschillende woorden: 5" ;
+        Assert.assertEquals(expectedOutput.toString(), testOutput.toString());
     }
     
 }

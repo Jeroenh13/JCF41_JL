@@ -174,7 +174,7 @@ public class WoordenController implements Initializable {
         
         List<String> lines = new ArrayList<>(Arrays.asList(story.toLowerCase().split("\\n")));
         Map<Integer, String> linesHashMap = new HashMap<Integer, String>();
-        Map<String, String> wordsHashMap = new HashMap<String, String>();
+        Map<String, String> wordsTreeMap = new TreeMap<String, String>();
 
         int current = 1;
         for (String s : lines) {
@@ -184,14 +184,15 @@ public class WoordenController implements Initializable {
         for (Integer key : linesHashMap.keySet()) {
             List<String> words = new ArrayList<>(Arrays.asList(linesHashMap.get(key).split("\\W+")));
             for (String word : words) {
-                if (wordsHashMap.containsKey(word)) {
-                    wordsHashMap.replace(word, wordsHashMap.get(word) + ", " + key.toString());
+                if (wordsTreeMap.containsKey(word)) {
+                    wordsTreeMap.replace(word, wordsTreeMap.get(word) + ", " + key.toString());
                 } else {
-                    wordsHashMap.putIfAbsent(word, key.toString());
+                    wordsTreeMap.putIfAbsent(word, key.toString());
                 }
             }
         }
-        Iterator it = wordsHashMap.entrySet().iterator();
+        
+        Iterator it = wordsTreeMap.entrySet().iterator();
 
         StringBuilder sb = new StringBuilder();
         while (it.hasNext()) {
