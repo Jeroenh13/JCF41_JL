@@ -57,62 +57,55 @@ public class WoordenControllerTest {
     }
 
     @Test
-    public void testBackWardSort()
-    {
+    public void testBackWardSort() {
         WoordenController controller = new WoordenController();
         String story = "a, c, b, f, d\n"
                 + "h, e, g, j, i\n";
         String realOutput = controller.backwardSort(story);
         String expectedOutput = "j" + "\n"
-                                + "i" + "\n"
-                                + "h" + "\n"
-                                + "g" + "\n"
-                                + "f" + "\n"
-                                + "e" + "\n"
-                                + "d" + "\n"
-                                + "c" + "\n"
-                                + "b" + "\n"
-                                + "a" + "\n";
-        Assert.assertEquals(expectedOutput.toString(), realOutput.toString());                               
+                + "i" + "\n"
+                + "h" + "\n"
+                + "g" + "\n"
+                + "f" + "\n"
+                + "e" + "\n"
+                + "d" + "\n"
+                + "c" + "\n"
+                + "b" + "\n"
+                + "a" + "\n";
+        Assert.assertEquals(expectedOutput.toString(), realOutput.toString());
     }
-    
+
     @Test
-    public void frequentTest()
-    {
+    public void frequentTest() {
         WoordenController controller = new WoordenController();
         String story = "dit is een tekst waar vaker is en dit in voorkomt";
-        
+
         String testOutput = controller.frequentie(story);
-        String ExpectedOutput = "vaker=1\n" +
-                                "in=1\n" +
-                                "voorkomt=1\n" +
-                                "tekst=1\n" +
-                                "en=1\n" +
-                                "waar=1\n" +
-                                "een=1\n" +
-                                "is=2\n" +
-                                "dit=2\n" +
-                                "";
+        String ExpectedOutput = "vaker=1\n"
+                + "in=1\n"
+                + "voorkomt=1\n"
+                + "tekst=1\n"
+                + "en=1\n"
+                + "waar=1\n"
+                + "een=1\n"
+                + "is=2\n"
+                + "dit=2\n"
+                + "";
         Assert.assertEquals(ExpectedOutput, testOutput);
     }
-    
+
     @Test
-    public void concordantieTest()
-    {
+    public void concordantieTest() {
         WoordenController controller = new WoordenController();
-        String story = "Dit is een \nverhaal met meerdere regels. \nDit is een regel";
-        
+        String story = "Regel een \nRegel twee \nRegel drie";
+
         String testOutput = controller.concordantie(story);
-        String ExpectedOutput = "dit=1, 3\n" +
-                                "een=1, 3\n" +
-                                "is=1, 3\n" +
-                                "meerdere=2\n" +
-                                "met=2\n" +
-                                "regel=3\n" +
-                                "regels=2\n" +
-                                "verhaal=2\n" +
-                                "";
-        
-        Assert.assertEquals(ExpectedOutput, testOutput);
+        String ExpectedOutput = "drie=3\n"
+                + "een=1\n"
+                + "regel=1, 2, 3\n"
+                + "twee=2\n";
+
+        Assert.assertEquals(ExpectedOutput, testOutput, "Concordantietest gelukt");
+
     }
 }
