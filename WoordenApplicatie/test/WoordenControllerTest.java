@@ -105,7 +105,7 @@ public class WoordenControllerTest {
                 + "regel=1, 2, 3\n"
                 + "twee=2\n";
 
-        Assert.assertEquals(ExpectedOutput, testOutput, "Concordantietest gelukt");
+        Assert.assertEquals(ExpectedOutput, testOutput);
 
     }
 }
