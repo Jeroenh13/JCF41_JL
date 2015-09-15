@@ -75,8 +75,6 @@ public class WoordenControllerTest {
                                 + "a" + "\n";
         Assert.assertEquals(expectedOutput.toString(), realOutput.toString());                               
     }
-<<<<<<< HEAD
-=======
     
     @Test
     public void frequentTest()
@@ -117,5 +115,4 @@ public class WoordenControllerTest {
         
         Assert.assertEquals(ExpectedOutput, testOutput);
     }
->>>>>>> origin/master
 }
