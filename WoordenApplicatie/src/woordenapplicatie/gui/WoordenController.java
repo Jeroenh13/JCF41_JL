@@ -169,8 +169,9 @@ public class WoordenController implements Initializable {
     public String concordantie(String story)
     {
         List<String> lines = new ArrayList<>(Arrays.asList(story.toLowerCase().split("\\n+")));
-        Map<Integer, String> linesHashMap = new HashMap<Integer, String>();
-        Map<String, String> wordsTreeMap = new TreeMap<String, String>();
+        Map<Integer, String> linesHashMap = new HashMap<>();
+        Map<String, String> wordsTreeMap = new TreeMap<>();
+        Map<String, TreeSet> wordsTreeMap2 = new TreeMap<>();
 
         //Zet elke lijn in een hashmap
         int current = 1;
@@ -183,20 +184,40 @@ public class WoordenController implements Initializable {
         for (Integer key : linesHashMap.keySet()) {
             List<String> words = new ArrayList<>(Arrays.asList(linesHashMap.get(key).split("\\W+")));
             for (String word : words) {
-                if (wordsTreeMap.containsKey(word)) {
+                if (wordsTreeMap.containsKey(word) || wordsTreeMap2.containsKey(word)) {
+                    //haalt de treeset op, voegt een nieuwe waarde toe en zet hem er weer in
+                    TreeSet temp = new TreeSet(wordsTreeMap2.get(word));
+                    temp.add(key);
+                    wordsTreeMap2.replace(word, temp);
+                    
                     //Voegt de regel van de lijn toe
                     wordsTreeMap.replace(word, wordsTreeMap.get(word) + ", " + key.toString());
                 } else {
+                    //Maakt een nieuwe treeset als de key nog niet bestaat
+                   TreeSet temp = new TreeSet();
+                    temp.add(key);
+                    wordsTreeMap2.putIfAbsent(word, temp);
+                    
+                    //maakt een nieuwe entry voor de string
                     wordsTreeMap.putIfAbsent(word, key.toString());
                 }
             }
         }
         
+        //iterator voor de string in de treemap
         Iterator it = wordsTreeMap.entrySet().iterator();
 
         StringBuilder sb = new StringBuilder();
         while (it.hasNext()) {
             sb.append(it.next()).append("\n");
+        }
+        
+        //Iterator voor de treeset in de treemap
+        Iterator it2 = wordsTreeMap2.entrySet().iterator();
+        
+        StringBuilder sb2 = new StringBuilder();
+        while(it2.hasNext()){
+            sb2.append(it2.next().toString()).append("\n");
         }
 
         return sb.toString();
