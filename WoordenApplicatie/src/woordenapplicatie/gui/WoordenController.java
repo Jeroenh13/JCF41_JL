@@ -96,20 +96,12 @@ public class WoordenController implements Initializable {
     public String wordCounter(String story){
          //List sorteren en daarmee checken werkt het snelst. Bij een set haalt hij alle dubbele weg, en bij een map is een key niet echt van toepassing
         List<String> words = new ArrayList<>(Arrays.asList(story.split("\\W+")));
-        Collections.sort(words);
-
-        int cnt = 0;
-        String tmp = "";
-        for (String s : words) {
-            if (!tmp.toUpperCase().equals(s.toUpperCase())) {
-                tmp = s;
-                cnt++;
-            }
-        }
-        return "Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + cnt;
+        TreeSet treeWords = new TreeSet<>(words);
+        
+        return "Aantal woorden: " + words.size() + "\n" + "Aantal verschillende woorden: " + treeWords.size();
     }
     
-    public String backwardSort(String story)
+        public String backwardSort(String story)
     {
         //TreeSet vraagt snel de volgende in de reeks op.
         //Alle woorden met hoofdletter staan wel bovenaan gesorteerd..
