@@ -10,12 +10,14 @@ package huffmanopdracht;
  * @author Lisa
  */
 public class HuffmanOpdracht {
+    
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        HuffmanController c = new HuffmanController();
+        System.out.println(c.internGetFrequentie());
     }
     
 }
