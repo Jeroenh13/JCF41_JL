@@ -28,8 +28,7 @@ public class HuffmanController {
     
     public String internGetFrequentie()
     {
-        String s = getFrequentie(DEFAULT_TEXT);
-        return s;
+        return getFrequentie(DEFAULT_TEXT);
     }
 
     private String getFrequentie(String s) {
@@ -52,11 +51,13 @@ public class HuffmanController {
                  return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
             }
         });
+        
+        
         StringBuilder sb = new StringBuilder();
         Iterator it = sorted.iterator();
         while (it.hasNext())
         {
-            sb.append(it.next()+"\n");
+            sb.append(it.next()).append("\n");
         }
         return sb.toString();
     }
