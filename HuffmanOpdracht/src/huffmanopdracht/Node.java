@@ -27,6 +27,10 @@ public class Node implements Comparable {
         this.left = left;
         this.right = right;
     }
+    
+    Node(int v) {
+        value = v;
+    }
 
     Node(char c, int v) {
         character = c;
