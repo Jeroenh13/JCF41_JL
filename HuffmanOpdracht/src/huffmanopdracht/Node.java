@@ -22,16 +22,12 @@ public class Node implements Comparable {
      * @param left parent, can be null
      * @param right parent, can be null
      */
-    private Node(int v, Node left, Node right) {
+    Node(int v, Node left, Node right) {
         value = v;
         this.left = left;
         this.right = right;
     }
-    
-    Node(int v) {
-        value = v;
-    }
-
+   
     Node(char c, int v) {
         character = c;
         value = v;
