@@ -5,6 +5,7 @@
  */
 package huffmanopdracht;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
@@ -13,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
@@ -26,15 +28,20 @@ public class HuffmanController {
     private static final String DEFAULT_TEXT = 
              "liesje leerde lotje lopen langs de lange lindelaan";
     
+    private List<Node> HuffmanTree = new ArrayList<Node>();
+    
     public String internGetFrequentie()
     {
-        return getFrequentie(DEFAULT_TEXT);
+        List<Node> hoi = getFrequencyTree(DEFAULT_TEXT);
+        return "";
+        //return getFrequentie(DEFAULT_TEXT);
     }
 
-    private String getFrequentie(String s) {
+    private List<Node> getFrequencyTree(String s) {
         char[] charArray = s.toCharArray();
         Map<Character, Integer> freqList = new LinkedHashMap<>();
-
+        List<Node> HuffTree = new ArrayList<>();
+        
         for (char key : charArray) {
             if (freqList.containsKey(key)) {
                 freqList.put(key, freqList.get(key) + 1);
@@ -52,13 +59,18 @@ public class HuffmanController {
             }
         });
         
+        Map sortedMap = new LinkedHashMap();
+	for (Iterator it = sorted.iterator(); it.hasNext();) {
+		Map.Entry entry = (Map.Entry) it.next();
+		sortedMap.put(entry.getKey(), entry.getValue());
+	}
         
-        StringBuilder sb = new StringBuilder();
-        Iterator it = sorted.iterator();
+        Iterator it = sortedMap.entrySet().iterator();
         while (it.hasNext())
         {
-            sb.append(it.next()).append("\n");
+            Entry e = (Entry) it.next();
+            HuffTree.add(new Node((char)e.getKey(),(Integer)e.getValue()));
         }
-        return sb.toString();
+        return HuffTree;
     }
 }

@@ -19,7 +19,7 @@ public class Node {
         character = c;
     }
     
-    private Node(char c, int v)
+    Node(char c, int v)
     {
         character = c;
         value = v;
