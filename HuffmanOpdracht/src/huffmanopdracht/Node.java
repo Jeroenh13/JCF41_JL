@@ -9,50 +9,58 @@ package huffmanopdracht;
  *
  * @author jeroe
  */
-public class Node {
+public class Node implements Comparable {
+
     private char character;
     private int value;
-    private Node left,right;
-    
+    private Node left, right;
+
     /**
      * Makes a new empty node with value and parents
+     *
      * @param v frequency
      * @param left parent, can be null
      * @param right parent, can be null
      */
-    private Node(int v, Node left, Node right)
-    {
+    private Node(int v, Node left, Node right) {
         value = v;
         this.left = left;
         this.right = right;
     }
-    
-    Node(char c, int v)
-    {
+
+    Node(char c, int v) {
         character = c;
         value = v;
     }
-    
-    public char getCharacter()
-    {
+
+    public char getCharacter() {
         return character;
     }
-    
-    public int getValue()
-    {
+
+    public int getValue() {
         return value;
     }
-    
-    public Node getNode(String side)
-    {
-       switch (side) {
+
+    public Node getNode(String side) {
+        switch (side) {
             case "Left":
             case "left":
                 return left;
             case "Right":
             case "right":
                 return right;
-        } 
-       return null;
+        }
+        return null;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (((Node) o).value > this.value) {
+            return 1;
+        } else if (((Node) o).value < this.value) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
