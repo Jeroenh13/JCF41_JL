@@ -14,9 +14,17 @@ public class Node {
     private int value;
     private Node left,right;
     
-    private Node(char c)
+    /**
+     * Makes a new empty node with value and parents
+     * @param v frequency
+     * @param left parent, can be null
+     * @param right parent, can be null
+     */
+    private Node(int v, Node left, Node right)
     {
-        character = c;
+        value = v;
+        this.left = left;
+        this.right = right;
     }
     
     Node(char c, int v)
@@ -47,21 +55,4 @@ public class Node {
         } 
        return null;
     }
-    
-    public void setNode(String side, Node n)
-    {
-        switch (side) {
-            case "Left":
-            case "left":
-                left = n;
-                break;
-            case "Right":
-            case "right":
-                right = n;
-                break;
-        }
-    }
-    
-    
-    
 }
