@@ -25,15 +25,15 @@ public final class HuffmanController {
 
     Map<Character, String> bitCodes = new HashMap<>();
 
-    public HuffmanController() {
-        createHuffMan();
-    }
-    ;
+    public HuffmanController(){
+        
+    };
+    
     
     private static final String DEFAULT_TEXT
             = "liesje leerde lotje lopen langs de lange lindelaan";
 
-    public void createHuffMan() {
+    public void SimulateHuffman() {
         List<Node> nodes = getFrequencyTree(DEFAULT_TEXT);
         List<Node> sortedNodes = sortHuffman(nodes);
         Node HuffmanRoot = makeHuffmanTree(sortedNodes);
@@ -122,7 +122,7 @@ public final class HuffmanController {
                 if (currentNode.getNode("left") != null) {
                     currentNode = currentNode.getNode("left");
                 }
-            } else {
+            } else if (c == '1') {
                 if (currentNode.getNode("right") != null) {
                     currentNode = currentNode.getNode("right");
                 }
@@ -133,7 +133,6 @@ public final class HuffmanController {
                 currentNode = HuffmanRoot;
             }
         }
-
         return sb.toString();
     }
 }

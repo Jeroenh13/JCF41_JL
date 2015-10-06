@@ -17,6 +17,7 @@ public class HuffmanOpdracht {
      */
     public static void main(String[] args) {
         HuffmanController c = new HuffmanController();
+        c.SimulateHuffman();
     }
     
 }
