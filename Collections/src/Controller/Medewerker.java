@@ -13,9 +13,9 @@ public class Medewerker {
     
     private String naam;
     private int id;
-    private int rol;
+    private Rol rol;
     
-    Medewerker (String naam, int id, int rol)
+    Medewerker (String naam, int id, Rol rol)
     {
         this.naam = naam;
         this.id = id;
