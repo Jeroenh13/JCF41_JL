@@ -5,10 +5,12 @@
  */
 package Controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -16,14 +18,23 @@ import java.util.TreeSet;
  */
 public class DataController {
     
-    private TreeSet<Afdeling> afdelingMap;
-    private HashSet<Medewerker> medewerkerMap;
+    private TreeSet<Afdeling> afdelingen;
+    private HashSet<Medewerker> medewerkers;
     
-    DataController()
+    public DataController()
     {
-        afdelingMap = new TreeSet();
-        medewerkerMap = new HashSet();
+        afdelingen = new TreeSet();
+        medewerkers = new HashSet();
+        vulTestdata();
     }
+    
+    public ObservableList<Afdeling> getAfdelingen()
+    {
+        
+        return (ObservableList<Afdeling>) afdelingen;
+    }
+    
+    
     
     public void vulTestdata()
     {
@@ -59,6 +70,8 @@ public class DataController {
          Medewerker mj = new Medewerker(10,"Diane Melaan",14);
          Medewerker mk = new Medewerker(11,"Konghon Choo",15);
          
+         afdelingen.add((Afdeling) Arrays.asList(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q));
+         medewerkers.add((Medewerker)Arrays.asList(ma,mb,mc,md,me,mf,mg,mh,mi,mj,mk));
                  
          
       

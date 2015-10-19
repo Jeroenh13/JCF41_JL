@@ -5,6 +5,8 @@
  */
 package gui;
 
+import Controller.Afdeling;
+import Controller.DataController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -13,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -23,13 +26,18 @@ import javafx.stage.Stage;
  * @author jeroen
  */
 public class CollectionsFormController extends Application {
+    
+    DataController dc = new DataController(); 
+    
 
     @FXML TreeView tvOrganistatie;
     @FXML TableView tbbvMedewerkers;
+   
     
     @Override
     public void start(Stage stage) throws Exception {
-
+        
+        //TreeItem<Afdeling> root = new TreeItem<> , null);
         Parent root = FXMLLoader.load(getClass().getResource("CollectionsForm.fxml"));
         
         Scene scene = new Scene(root);
