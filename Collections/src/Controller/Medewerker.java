@@ -13,13 +13,13 @@ public class Medewerker {
     
     private String naam;
     private int id;
-    private Rol rol;
+    private int afdeling;
     
-    Medewerker (String naam, int id, Rol rol)
+    Medewerker (int id, String naam, int afdeling)
     {
         this.naam = naam;
         this.id = id;
-        this.rol = rol;
+        this.afdeling = afdeling;
     }
     
 }

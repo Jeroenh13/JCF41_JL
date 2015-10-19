@@ -6,7 +6,9 @@
 package Controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  *
@@ -14,13 +16,13 @@ import java.util.TreeMap;
  */
 public class DataController {
     
-    private TreeMap<Afdeling, Rol> afdelingMap;
-    private HashMap<Medewerker, Rol> medewerkerMap;
+    private TreeSet<Afdeling> afdelingMap;
+    private HashSet<Medewerker> medewerkerMap;
     
     DataController()
     {
-        afdelingMap = new TreeMap();
-        medewerkerMap = new HashMap();
+        afdelingMap = new TreeSet();
+        medewerkerMap = new HashSet();
     }
     
     public void vulTestdata()
@@ -44,8 +46,21 @@ public class DataController {
                     Afdeling p = new Afdeling("DP", 16, j);
                     Afdeling q = new Afdeling("LS", 17, j);
                     
-        //Rollen
-                   
+         //Medewerker
+         Medewerker ma = new Medewerker(1,"Lisa van Kessel",2);
+         Medewerker mb = new Medewerker(2,"Jeroen Hendriks",3);
+         Medewerker mc = new Medewerker(3,"Jurgen van den Berg",3);
+         Medewerker md = new Medewerker(4,"Thom Bijsterbosch", 6);
+         Medewerker me = new Medewerker(5,"Kevin Grond",6);
+         Medewerker mf = new Medewerker(6,"Tijn Renders",7);
+         Medewerker mg = new Medewerker(7,"Eric van Aert", 8);
+         Medewerker mh = new Medewerker(8,"Lars Jaeqx",11);
+         Medewerker mi = new Medewerker(9,"Wouter Habets",12);
+         Medewerker mj = new Medewerker(10,"Diane Melaan",14);
+         Medewerker mk = new Medewerker(11,"Konghon Choo",15);
+         
+                 
+         
       
     }
     
