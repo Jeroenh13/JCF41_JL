@@ -5,11 +5,13 @@
  */
 package Controller;
 
+import java.io.Serializable;
+
 /**
  *
  * @author lisavankessel
  */
-public class Afdeling {
+public class Afdeling implements Serializable {
     
     private String naam;
     private int id;
@@ -28,4 +30,8 @@ public class Afdeling {
         this.parentAfdeling = parentAfdeling;
     }
     
+    public String getNaam()
+    {
+        return naam;
+    }
 }

@@ -5,11 +5,13 @@
  */
 package Controller;
 
+import java.io.Serializable;
+
 /**
  *
  * @author lisavankessel
  */
-public class Medewerker {
+public class Medewerker implements Serializable {
     
     private String naam;
     private int id;

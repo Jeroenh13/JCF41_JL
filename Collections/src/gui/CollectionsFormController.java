@@ -37,7 +37,8 @@ public class CollectionsFormController extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        //TreeItem<Afdeling> root = new TreeItem<> , null);
+        TreeItem<String> rootItem = new TreeItem<>(dc.getAfdelingen().get(0).getNaam() , null);
+        
         Parent root = FXMLLoader.load(getClass().getResource("CollectionsForm.fxml"));
         
         Scene scene = new Scene(root);
