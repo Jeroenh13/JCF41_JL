@@ -36,14 +36,27 @@ public class CollectionsFormController extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        
-        TreeItem<String> rootItem = new TreeItem<>(dc.getAfdelingen().get(0).getNaam() , null);
-        
         Parent root = FXMLLoader.load(getClass().getResource("CollectionsForm.fxml"));
-        
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
+        TreeItem<String> rootItem = new TreeItem<String>("FHICT");;
+        for(Afdeling a : dc.getAfdelingen())
+        {
+            if(a.getParentID()== 1)
+            {
+                 TreeItem<String> item = new TreeItem<String>(a.getNaam(), null);
+                 rootItem.getChildren().add(item);
+            }
+        }
+        rootItem.setExpanded(true);
+        
+        //TreeView<String> treeView = new TreeView<String>(rootItem);
+        
+        tvOrganistatie.setRoot(rootItem);
+        
+        
     }
       
     /**

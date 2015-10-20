@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author lisavankessel
  */
-public class Medewerker implements Serializable {
+public class Medewerker implements Serializable, Comparable<Medewerker> {
     
     private String naam;
     private int id;
@@ -22,6 +22,11 @@ public class Medewerker implements Serializable {
         this.naam = naam;
         this.id = id;
         this.afdeling = afdeling;
+    }
+
+    @Override
+    public int compareTo(Medewerker o) {
+        return 0;
     }
     
 }

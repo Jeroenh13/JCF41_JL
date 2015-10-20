@@ -28,30 +28,30 @@ public class DataController {
         vulTestdata();
     }
 
-    public ObservableList<Afdeling> getAfdelingen() {
+    public TreeSet<Afdeling> getAfdelingen() {
 
-        return (ObservableList<Afdeling>) afdelingen;
+        return afdelingen;
     }
 
     public void vulTestdata() {
         //Afdelingen
-        Afdeling a = new Afdeling("FHICT", 1);
-            Afdeling b = new Afdeling("Directie", 2, a);
-            Afdeling c = new Afdeling("ISSD", 3, a);
-            Afdeling d = new Afdeling("Onderwijs", 4, a);
-                Afdeling e = new Afdeling("Profiel", 5, d);
-                    Afdeling f = new Afdeling("Team S", 6, e);
-                    Afdeling g = new Afdeling("Team T", 7, e);
-                    Afdeling h = new Afdeling("Team B", 8, e);
-                    Afdeling i = new Afdeling("Team M", 9, e);
-                Afdeling j = new Afdeling("Innovatie", 10, d);
-                    Afdeling k = new Afdeling("ICS", 11, j);
-                    Afdeling l = new Afdeling("IMS", 12, j);
-                    Afdeling m = new Afdeling("SM", 13, j);
-                    Afdeling n = new Afdeling("EDU", 14, j);
-                    Afdeling o = new Afdeling("GD", 15, j);
-                    Afdeling p = new Afdeling("DP", 16, j);
-                    Afdeling q = new Afdeling("LS", 17, j);
+        Afdeling a = new Afdeling("FHICT", 1, 0);
+            Afdeling b = new Afdeling("Directie", 2, 1);
+            Afdeling c = new Afdeling("ISSD", 3, 1);
+            Afdeling d = new Afdeling("Onderwijs", 4, 1);
+                Afdeling e = new Afdeling("Profiel", 5, 4);
+                    Afdeling f = new Afdeling("Team S", 6, 5);
+                    Afdeling g = new Afdeling("Team T", 7, 5);
+                    Afdeling h = new Afdeling("Team B", 8, 5);
+                    Afdeling i = new Afdeling("Team M", 9, 5);
+                Afdeling j = new Afdeling("Innovatie", 10, 4);
+                    Afdeling k = new Afdeling("ICS", 11, 10);
+                    Afdeling l = new Afdeling("IMS", 12, 10);
+                    Afdeling m = new Afdeling("SM", 13, 10);
+                    Afdeling n = new Afdeling("EDU", 14, 10);
+                    Afdeling o = new Afdeling("GD", 15, 10);
+                    Afdeling p = new Afdeling("DP", 16, 10);
+                    Afdeling q = new Afdeling("LS", 17, 10);
 
         //Medewerker
         Medewerker ma = new Medewerker(1, "Lisa van Kessel", 2);
@@ -66,9 +66,7 @@ public class DataController {
         Medewerker mj = new Medewerker(10, "Diane Melaan", 14);
         Medewerker mk = new Medewerker(11, "Konghon Choo", 15);
 
-        afdelingen.addAll( Arrays.asList(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q));
-        medewerkers.addAll( Arrays.asList(ma, mb, mc, md, me, mf, mg, mh, mi, mj, mk));
-
+        afdelingen.addAll(Arrays.asList(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q));
+        medewerkers.addAll(Arrays.asList(ma, mb, mc, md, me, mf, mg, mh, mi, mj, mk));
     }
-
 }
