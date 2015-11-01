@@ -38,6 +38,11 @@ public class Afdeling implements Serializable, Comparable<Afdeling> {
     {
         return parentid;
     }
+    
+    public void setNaam(String naam)
+    {
+        this.naam = naam;
+    }
 
     @Override
     public int compareTo(Afdeling other) {

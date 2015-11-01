@@ -60,26 +60,27 @@ public class DataController implements Initializable {
     private ObservableList<Afdeling> obsAfdelingen;
     private ObservableList<Medewerker> obsMedewerkers;
     private TreeItem<String> selectedItem;
+    private TreeItem<String> rootItem;
 
     public void vulTestdata() {
         //Afdelingen
         Afdeling a = new Afdeling("FHICT", 1, "");
-            Afdeling b = new Afdeling("Directie", 2, "FHICT");
-            Afdeling c = new Afdeling("ISSD", 3, "FHICT");
-                Afdeling d = new Afdeling("Onderwijs", 4, "FHICT");
-                    Afdeling e = new Afdeling("Profiel", 5, "Onderwijs");
-                        Afdeling f = new Afdeling("Team S", 6, "Profiel");
-                        Afdeling g = new Afdeling("Team T", 7, "Profiel");
-                        Afdeling h = new Afdeling("Team B", 8, "Profiel");
-                        Afdeling i = new Afdeling("Team M", 9, "Profiel");
-                    Afdeling j = new Afdeling("Innovatie", 10, "Onderwijs");
-                        Afdeling k = new Afdeling("ICS", 11, "Innovatie");
-                        Afdeling l = new Afdeling("IMS", 12, "Innovatie");
-                        Afdeling m = new Afdeling("SM", 13, "Innovatie");
-                        Afdeling n = new Afdeling("EDU", 14, "Innovatie");
-                        Afdeling o = new Afdeling("GD", 15, "Innovatie");
-                        Afdeling p = new Afdeling("DP", 16, "Innovatie");
-                        Afdeling q = new Afdeling("LS", 17, "Innovatie");
+        Afdeling b = new Afdeling("Directie", 2, "FHICT");
+        Afdeling c = new Afdeling("ISSD", 3, "FHICT");
+        Afdeling d = new Afdeling("Onderwijs", 4, "FHICT");
+        Afdeling e = new Afdeling("Profiel", 5, "Onderwijs");
+        Afdeling f = new Afdeling("Team S", 6, "Profiel");
+        Afdeling g = new Afdeling("Team T", 7, "Profiel");
+        Afdeling h = new Afdeling("Team B", 8, "Profiel");
+        Afdeling i = new Afdeling("Team M", 9, "Profiel");
+        Afdeling j = new Afdeling("Innovatie", 10, "Onderwijs");
+        Afdeling k = new Afdeling("ICS", 11, "Innovatie");
+        Afdeling l = new Afdeling("IMS", 12, "Innovatie");
+        Afdeling m = new Afdeling("SM", 13, "Innovatie");
+        Afdeling n = new Afdeling("EDU", 14, "Innovatie");
+        Afdeling o = new Afdeling("GD", 15, "Innovatie");
+        Afdeling p = new Afdeling("DP", 16, "Innovatie");
+        Afdeling q = new Afdeling("LS", 17, "Innovatie");
 
         //Medewerker
         Medewerker ma = new Medewerker(1, "Lisa van Kessel", "Directie");
@@ -150,8 +151,8 @@ public class DataController implements Initializable {
             }
         });
 
-        TreeItem<String> rootItem = new TreeItem<String>(obsAfdelingen.get(0).getNaam());
-        FillTree(rootItem, getChilds(obsAfdelingen.get(0).getNaam()).iterator());
+        rootItem = new TreeItem<String>(obsAfdelingen.get(0).getNaam());
+        refreshTree();
 
         rootItem.setExpanded(true);
 
@@ -170,7 +171,7 @@ public class DataController implements Initializable {
         }
         return item;
     }
-    
+
     public ArrayList<Afdeling> getChilds(String naam) {
         ArrayList<Afdeling> afd = new ArrayList<>();
 
@@ -181,7 +182,7 @@ public class DataController implements Initializable {
         }
         return afd;
     }
-    
+
     private void fillMedewerkers(String value) {
         ArrayList<Medewerker> med = new ArrayList<>();
 
@@ -215,6 +216,20 @@ public class DataController implements Initializable {
 
     public void refreshTable() {
         fillMedewerkers(selectedItem.getValue());
+    }
+
+    public void refreshTree() {
+        FillTree(rootItem, getChilds(obsAfdelingen.get(0).getNaam()).iterator());
+    }
+
+    private void veranderAfdeling(String oldName, String newName) {
+        for(Afdeling a : afdelingen)
+        {
+            if(a.getNaam().equals(oldName))
+            {
+                a.setNaam(newName);
+            }
+        }
     }
 
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
@@ -271,7 +286,7 @@ public class DataController implements Initializable {
                 } else {
                     setText(getString());
                     setGraphic(getTreeItem().getGraphic());
-                    if (!getTreeItem().isLeaf() && getTreeItem().getParent() != null) {
+                    if (getTreeItem().getParent() != null) {
                         setContextMenu(addMenu);
                     }
                 }
@@ -296,5 +311,6 @@ public class DataController implements Initializable {
         private String getString() {
             return getItem() == null ? "" : getItem().toString();
         }
+
     }
 }
