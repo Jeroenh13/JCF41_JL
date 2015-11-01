@@ -15,9 +15,9 @@ public class Afdeling implements Serializable, Comparable<Afdeling> {
     
     private String naam;
     private int id;
-    private int parentid;
+    private String parentid;
         
-    Afdeling (String naam, int id, int parentAfdeling)
+    Afdeling (String naam, int id, String parentAfdeling)
     {
         this.naam = naam;
         this.id = id;
@@ -34,7 +34,7 @@ public class Afdeling implements Serializable, Comparable<Afdeling> {
         return id;
     }
     
-    public int getParentID()
+    public String getParentID()
     {
         return parentid;
     }
