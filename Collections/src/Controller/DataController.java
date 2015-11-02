@@ -65,22 +65,22 @@ public class DataController implements Initializable {
     public void vulTestdata() {
         //Afdelingen
         Afdeling a = new Afdeling("FHICT", 1, "");
-        Afdeling b = new Afdeling("Directie", 2, "FHICT");
-        Afdeling c = new Afdeling("ISSD", 3, "FHICT");
-        Afdeling d = new Afdeling("Onderwijs", 4, "FHICT");
-        Afdeling e = new Afdeling("Profiel", 5, "Onderwijs");
-        Afdeling f = new Afdeling("Team S", 6, "Profiel");
-        Afdeling g = new Afdeling("Team T", 7, "Profiel");
-        Afdeling h = new Afdeling("Team B", 8, "Profiel");
-        Afdeling i = new Afdeling("Team M", 9, "Profiel");
-        Afdeling j = new Afdeling("Innovatie", 10, "Onderwijs");
-        Afdeling k = new Afdeling("ICS", 11, "Innovatie");
-        Afdeling l = new Afdeling("IMS", 12, "Innovatie");
-        Afdeling m = new Afdeling("SM", 13, "Innovatie");
-        Afdeling n = new Afdeling("EDU", 14, "Innovatie");
-        Afdeling o = new Afdeling("GD", 15, "Innovatie");
-        Afdeling p = new Afdeling("DP", 16, "Innovatie");
-        Afdeling q = new Afdeling("LS", 17, "Innovatie");
+            Afdeling b = new Afdeling("Directie", 2, "FHICT");
+            Afdeling c = new Afdeling("ISSD", 3, "FHICT");
+            Afdeling d = new Afdeling("Onderwijs", 4, "FHICT");
+                Afdeling e = new Afdeling("Profiel", 5, "Onderwijs");
+                    Afdeling f = new Afdeling("Team S", 6, "Profiel");
+                    Afdeling g = new Afdeling("Team T", 7, "Profiel");
+                    Afdeling h = new Afdeling("Team B", 8, "Profiel");
+                    Afdeling i = new Afdeling("Team M", 9, "Profiel");
+                Afdeling j = new Afdeling("Innovatie", 10, "Onderwijs");
+                    Afdeling k = new Afdeling("ICS", 11, "Innovatie");
+                    Afdeling l = new Afdeling("IMS", 12, "Innovatie");
+                    Afdeling m = new Afdeling("SM", 13, "Innovatie");
+                    Afdeling n = new Afdeling("EDU", 14, "Innovatie");
+                    Afdeling o = new Afdeling("GD", 15, "Innovatie");
+                    Afdeling p = new Afdeling("DP", 16, "Innovatie");
+                    Afdeling q = new Afdeling("LS", 17, "Innovatie");
 
         //Medewerker
         Medewerker ma = new Medewerker(1, "Lisa van Kessel", "Directie");
@@ -151,12 +151,7 @@ public class DataController implements Initializable {
             }
         });
 
-        rootItem = new TreeItem<String>(obsAfdelingen.get(0).getNaam());
         refreshTree();
-
-        rootItem.setExpanded(true);
-
-        tvOrganistatie.setRoot(rootItem);
     }
 
     public TreeItem<String> FillTree(TreeItem<String> item, Iterator childAfdelingen) {
@@ -219,15 +214,21 @@ public class DataController implements Initializable {
     }
 
     public void refreshTree() {
+        rootItem = new TreeItem<String>(obsAfdelingen.get(0).getNaam());
+
         FillTree(rootItem, getChilds(obsAfdelingen.get(0).getNaam()).iterator());
+        rootItem.setExpanded(true);
+
+        tvOrganistatie.setRoot(rootItem);
     }
 
     private void veranderAfdeling(String oldName, String newName) {
-        for(Afdeling a : afdelingen)
-        {
-            if(a.getNaam().equals(oldName))
-            {
+        for (Afdeling a : afdelingen) {
+            if (a.getNaam().equals(oldName)) {
                 a.setNaam(newName);
+            }
+            if (a.getParentID().equals(oldName)) {
+                a.setParentAfdeling(newName);
             }
         }
     }
@@ -265,14 +266,14 @@ public class DataController implements Initializable {
         @Override
         public void cancelEdit() {
             super.cancelEdit();
-            setText((String) getItem());
+            super.
+                    setText((String) getItem());
             setGraphic(getTreeItem().getGraphic());
         }
 
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-
             if (empty) {
                 setText(null);
                 setGraphic(null);
@@ -286,9 +287,8 @@ public class DataController implements Initializable {
                 } else {
                     setText(getString());
                     setGraphic(getTreeItem().getGraphic());
-                    if (getTreeItem().getParent() != null) {
-                        setContextMenu(addMenu);
-                    }
+
+                    setContextMenu(addMenu);
                 }
             }
         }
@@ -300,7 +300,9 @@ public class DataController implements Initializable {
                 @Override
                 public void handle(KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
+                        veranderAfdeling(getString(), textField.getText());
                         commitEdit(textField.getText());
+                        //refreshTree();
                     } else if (t.getCode() == KeyCode.ESCAPE) {
                         cancelEdit();
                     }
@@ -311,6 +313,5 @@ public class DataController implements Initializable {
         private String getString() {
             return getItem() == null ? "" : getItem().toString();
         }
-
     }
 }

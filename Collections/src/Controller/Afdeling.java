@@ -15,13 +15,13 @@ public class Afdeling implements Serializable, Comparable<Afdeling> {
     
     private String naam;
     private int id;
-    private String parentid;
+    private String parentAfdeling;
         
     Afdeling (String naam, int id, String parentAfdeling)
     {
         this.naam = naam;
         this.id = id;
-        this.parentid = parentAfdeling;
+        this.parentAfdeling = parentAfdeling;
     }
     
     public String getNaam()
@@ -36,12 +36,17 @@ public class Afdeling implements Serializable, Comparable<Afdeling> {
     
     public String getParentID()
     {
-        return parentid;
+        return parentAfdeling;
     }
     
     public void setNaam(String naam)
     {
         this.naam = naam;
+    }
+    
+    public void setParentAfdeling(String naam)
+    {
+        parentAfdeling = naam;
     }
 
     @Override
