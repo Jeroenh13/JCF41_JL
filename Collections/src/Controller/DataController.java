@@ -154,6 +154,7 @@ public class DataController implements Initializable {
         refreshTree();
     }
 
+    // Vult de treeitem met children, recursief wordt gekeken naar children en toegevoegd aan de parent.
     public TreeItem<String> FillTree(TreeItem<String> item, Iterator childAfdelingen) {
         Iterator it = childAfdelingen;
         TreeItem<String> leafItem = null;
@@ -167,6 +168,7 @@ public class DataController implements Initializable {
         return item;
     }
 
+    //Haalt alle childs op van de gekozen afdeling
     public ArrayList<Afdeling> getChilds(String naam) {
         ArrayList<Afdeling> afd = new ArrayList<>();
 
@@ -178,6 +180,7 @@ public class DataController implements Initializable {
         return afd;
     }
 
+    //Vult de medewerkerstable op basis van het geselecteerde treeview item. Als het FHICT is dan wordt alles getoond
     private void fillMedewerkers(String value) {
         ArrayList<Medewerker> med = new ArrayList<>();
 
@@ -194,6 +197,7 @@ public class DataController implements Initializable {
         tbbvMedewerkers.setItems(FXCollections.observableList(med));
     }
 
+    //Event voor de toevoegen knop
     public void add(Event evt) {
         Medewerker a = new Medewerker(medewerkers.size() + 1, "...", selectedItem.getValue());
         medewerkers.add(a);
@@ -201,6 +205,7 @@ public class DataController implements Initializable {
         refreshTable();
     }
 
+    //Event voor de verwijderen knop
     public void delete(Event evt) {
         int i = tbbvMedewerkers.getSelectionModel().getSelectedIndex();
         Medewerker m = (Medewerker) tbbvMedewerkers.getSelectionModel().getSelectedItem();
@@ -209,10 +214,13 @@ public class DataController implements Initializable {
         refreshTable();
     }
 
+    
+    //vult de medewerkers opnieuw
     public void refreshTable() {
         fillMedewerkers(selectedItem.getValue());
     }
 
+    //Refresht de treeview met nieuwe waardes
     public void refreshTree() {
         rootItem = new TreeItem<String>(obsAfdelingen.get(0).getNaam());
 
@@ -222,6 +230,7 @@ public class DataController implements Initializable {
         tvOrganistatie.setRoot(rootItem);
     }
 
+    //Verandert de waardes van een afdeling > naam en van alle childs
     private void veranderAfdeling(String oldName, String newName) {
         for (Afdeling a : afdelingen) {
             if (a.getNaam().equals(oldName)) {
@@ -233,6 +242,7 @@ public class DataController implements Initializable {
         }
     }
 
+    //Custom class voor het toevoegen van een nieuwe afdeling
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
 
         private TextField textField;
