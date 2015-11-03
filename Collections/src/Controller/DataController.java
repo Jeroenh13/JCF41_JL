@@ -110,6 +110,7 @@ public class DataController implements Initializable {
         //TableView
         TableColumn clmNaam = new TableColumn("Naam");
         TableColumn clmAfdeling = new TableColumn("Afdeling");
+        
         tbbvMedewerkers.getColumns().addAll(clmNaam, clmAfdeling);
         tbbvMedewerkers.setEditable(true);
 
@@ -122,7 +123,6 @@ public class DataController implements Initializable {
             }
         });
 
-        clmAfdeling.setCellFactory(TextFieldTableCell.forTableColumn());
         clmAfdeling.setOnEditCommit(new EventHandler<CellEditEvent<Medewerker, String>>() {
             @Override
             public void handle(CellEditEvent<Medewerker, String> event) {
@@ -172,7 +172,7 @@ public class DataController implements Initializable {
     public ArrayList<Afdeling> getChilds(String naam) {
         ArrayList<Afdeling> afd = new ArrayList<>();
 
-        for (Afdeling a : obsAfdelingen) {
+        for (Afdeling a : afdelingen) {
             if (a.getParentID().equals(naam)) {
                 afd.add(a);
             }
@@ -189,7 +189,7 @@ public class DataController implements Initializable {
             return;
         }
 
-        for (Medewerker m : obsMedewerkers) {
+        for (Medewerker m : medewerkers) {
             if (m.getAfdeling().equals(value)) {
                 med.add(m);
             }
@@ -238,6 +238,13 @@ public class DataController implements Initializable {
             }
             if (a.getParentID().equals(oldName)) {
                 a.setParentAfdeling(newName);
+            }
+        }
+        
+        for(Medewerker m : medewerkers){
+            if(m.getAfdeling().equals(oldName))
+            {
+                m.setAfdeling(newName);
             }
         }
     }
@@ -312,7 +319,6 @@ public class DataController implements Initializable {
                     if (t.getCode() == KeyCode.ENTER) {
                         veranderAfdeling(getString(), textField.getText());
                         commitEdit(textField.getText());
-                        //refreshTree();
                     } else if (t.getCode() == KeyCode.ESCAPE) {
                         cancelEdit();
                     }
